@@ -36,8 +36,7 @@ trait DataTableTrait
 
     public function queryFilter($query){
         $search = request()->get('search');
-        $value = request()->get('filter') ?? $this->fieldSearching();
-
+        $value = request()->get('filter') ? request()->get('filter') : $this->fieldSearching();
         if($search){
             $query = $query->where($value, 'like', "%{$search}%");
         }

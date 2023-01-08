@@ -97,6 +97,19 @@ function formatLabel($value){
     return ucfirst($label);
 }
 
+function formatAttribute($value){
+
+    $label = Str::of($value);
+    if($label->contains(' ')){
+        $label = $label = $label->explode(' ')->last();
+    }
+    else{
+        $label = $label->replace('[]', '');
+    }
+
+    return ucfirst($label);
+}
+
 function showValue($value){
     if($value == 0){
         return '';

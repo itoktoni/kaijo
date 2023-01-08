@@ -1,10 +1,15 @@
 <?php
 
+use App\Dao\Enums\MenuType;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Buki\AutoRoute\AutoRouteFacade as AutoRoute;
+use Plugins\Core;
+use Plugins\Query;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,23 +22,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::post('login', [UserController::class, 'postLoginApi'])->name('postLoginApi');
+$core = [
+    "App\Http\Controllers\RolesController",
+    "App\Http\Controllers\UserController",
+    "App\Http\Controllers\SettingController",
+    "App\Http\Controllers\GroupsController",
+    "App\Http\Controllers\MenuController",
+    "App\Http\Controllers\LinkController",
+    "App\Http\Controllers\PermissionController",
+];
 
-// Route::get('calendar', 'ReportScheduleController@getCalendar')->name('calendar');
-Route::get('test', function(Request $request){
-	$data = DB::table('item_linen')->where('item_linen_rfid', 'like', "%$request->search%")
-	->limit(10)->get();
-	$item = $data->map(function($item){
-		return [
-			'id' => $item->item_linen_rfid,
-			'text' => $item->item_linen_rfid,
-		];
-	})->toArray();
-	 return $item;
-})->name('test');
+$routes = Query::getMenu()->whereNotIn('menu_controller', $core)->unique('menu_controller')->pluck('menu_controller');
+if($routes){
+	Route::middleware(['auth:sanctum'])->group(function () use ($routes) {
+		foreach ($routes as $menu) {
+			try {
+				$name = Core::getControllerName($menu);
+				AutoRoute::auto(Str::snake($name), $menu, [
+					'name' => 'api_'.$name,
+					'only' => [
+						'getData',
+						'postCreate',
+						'postUpdate',
+						'postDelete',
+						'postSync',
+					]
+				]);
+			} catch (\Throwable$th) {
+				//throw $th;
+			}
+		}
+	});
+}
 
-// Route::get('linen_by_rs', );

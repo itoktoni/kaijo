@@ -13,6 +13,13 @@
 @if ($errors->any())
 <script type="text/javascript">
     @foreach($errors->all() as $error)
+        @php
+            $string = Str::of($error);
+            $required = ' wajib diisi';
+            if($string->contains($required)){
+                $error = formatAttribute($string->before($required)).$required ?? $error;
+            }
+        @endphp
         toastr.error('{{ $error }}');
     @endforeach
 </script>

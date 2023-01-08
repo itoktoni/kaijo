@@ -20,9 +20,6 @@ trait ActiveTrait
                 }
             }
         }
-        if(method_exists($this, 'field_active')){
-            $query = $query->where($this->field_active(), BooleanType::Yes);
-        }
 
         return $query;
     }

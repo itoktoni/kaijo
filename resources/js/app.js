@@ -258,7 +258,7 @@ document.body.addEventListener('htmx:configRequest', (event) => {
 
 addEventListener("htmx:beforeRequest", (event) => {
     NProgress.start();
-    NProgress.set(0.8);
+    NProgress.set(0.9);
 });
 
 addEventListener("htmx:afterRequest", (event) => {
@@ -315,9 +315,11 @@ addEventListener("htmx:afterSettle", (event) => {
 document.onreadystatechange = function() {
     if (document.readyState !== "complete") {
         NProgress.start();
-        NProgress.set(0.8);
+        NProgress.set(0.9);
     } else {
         NProgress.done();
         NProgress.remove();
     }
+    NProgress.done();
+    NProgress.remove();
 };

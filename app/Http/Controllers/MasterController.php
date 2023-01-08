@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dao\Enums\BooleanType;
+use App\Dao\Models\Rs;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteRequest;
 use App\Http\Services\DeleteService;

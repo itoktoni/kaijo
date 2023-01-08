@@ -20,7 +20,14 @@ class MasterRepository implements CrudInterface
     {
         $query = $this->model
             ->select($this->model->getSelectedField())
-            ->active()->sortable()->filter();
+            ->sortable()->filter();
+
+            if(request()->hasHeader('authorization')){
+                if($paging = request()->get('paginate')){
+                    return $query->paginate($paging);
+                }
+                return $query->get();
+            }
 
         $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate(env('PAGINATION_NUMBER')) : $query->paginate(env('PAGINATION_NUMBER'));
 

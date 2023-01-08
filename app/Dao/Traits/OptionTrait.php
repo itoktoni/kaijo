@@ -2,6 +2,7 @@
 
 namespace App\Dao\Traits;
 
+use App\Dao\Enums\BooleanType;
 use Plugins\Filter;
 
 trait OptionTrait
@@ -43,20 +44,25 @@ trait OptionTrait
     public static function getOptions($raw = false)
     {
         self::$option_model = self::getModel();
+        $query = self::$option_model->query();
 
         if ($raw) {
-            return self::$option_model->get();
+            return $query->get();
         }
         else{
 
-            self::$option_data = self::$option_model
-            ->select(self::$option_model->fieldSearching(), self::$option_model->getKeyName())
-            ->get()
-            ->pluck( self::$option_model->fieldSearching(),  self::$option_model->getKeyName())
+            $query = $query
+            ->select(self::$option_model->fieldSearching(), self::$option_model->getKeyName());
+
+            if(method_exists(self::$option_model, 'field_active')){
+                $query = self::$option_model->where(self::$option_model->field_active(), BooleanType::Yes);
+            }
+
+            self::$option_model = $query->get()->pluck( self::$option_model->fieldSearching(),  self::$option_model->getKeyName())
             ?? [];
         }
 
 
-        return self::$option_data;
+        return self::$option_model;
     }
 }
