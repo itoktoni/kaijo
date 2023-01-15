@@ -1,6 +1,8 @@
 <?php
 
 use App\Dao\Enums\MenuType;
+use App\Dao\Models\Rs;
+use App\Dao\Models\Ruangan;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -10,6 +12,7 @@ use Buki\AutoRoute\AutoRouteFacade as AutoRoute;
 use Plugins\Core;
 use Plugins\Query;
 use Illuminate\Support\Str;
+use Plugins\Notes;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +59,21 @@ if($routes){
 	});
 }
 
+Route::get('configuration', function(Request $request){
+	$rs = Rs::getOptions();
+	$ruangan = Ruangan::getOptions();
+	$data = [
+		'domain' => env('APP_URL', 'https://sayur24jam.com'),
+		'rs' => $rs,
+		'ruangan' => $ruangan,
+		'book' => url('/book.pdf'),
+		'qrformat' => [
+			'RS' => 'RS001',
+			'RUANGAN' => 'UGD',
+			'ID' => 'X230252',
+			'CONTOH' => 'RS001#UGD#X230252'
+		]
+	];
+
+	return Notes::data($data);
+});
