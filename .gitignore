@@ -4,6 +4,7 @@
 /storage/*.key
 /postman/*
 .env
+/vendor
 .htaccess
 .env.backup
 .phpunit.result.cache
