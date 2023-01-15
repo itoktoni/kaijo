@@ -24,9 +24,9 @@ class MasterRepository implements CrudInterface
 
             if(request()->hasHeader('authorization')){
                 if($paging = request()->get('paginate')){
-                    return $query->paginate($paging);
+                    return Notes::data($query->paginate($paging));
                 }
-                return $query->get();
+                return Notes::data($query->get());
             }
 
         $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate(env('PAGINATION_NUMBER')) : $query->paginate(env('PAGINATION_NUMBER'));
