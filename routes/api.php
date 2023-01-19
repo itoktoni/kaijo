@@ -64,6 +64,7 @@ Route::get('configuration', function(Request $request){
 	$ruangan = Ruangan::getOptions();
 	$data = [
 		'domain' => env('APP_URL', 'https://sayur24jam.com'),
+		'version' => '1.0.0',
 		'rs' => $rs,
 		'ruangan' => $ruangan,
 		'book' => url('/book.pdf'),
