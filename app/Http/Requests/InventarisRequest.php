@@ -2,26 +2,26 @@
 
 namespace App\Http\Requests;
 
-use App\Dao\Models\Rs;
+use App\Dao\Models\Inventaris;
 use App\Dao\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class RsRequest extends FormRequest
+class InventarisRequest extends FormRequest
 {
     use ValidationTrait;
 
     public function validation() : array
     {
         return [
-            'rs_nama' => 'required',
+            Inventaris::field_name() => 'required',
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            Rs::field_name() =>  Str::upper($this->{Rs::field_name()})
+            Inventaris::field_name() =>  Str::upper($this->{Inventaris::field_name()})
         ]);
     }
 

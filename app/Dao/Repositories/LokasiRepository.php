@@ -3,13 +3,13 @@
 namespace App\Dao\Repositories;
 
 use App\Dao\Interfaces\CrudInterface;
-use App\Dao\Models\Ruangan;
+use App\Dao\Models\Lokasi;
 
-class RuanganRepository extends MasterRepository implements CrudInterface
+class LokasiRepository extends MasterRepository implements CrudInterface
 {
     public function __construct()
     {
-        $this->model = empty($this->model) ? new Ruangan() : $this->model;
+        $this->model = empty($this->model) ? new Lokasi() : $this->model;
     }
 
     public function dataRepository()

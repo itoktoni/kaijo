@@ -3,7 +3,7 @@
 namespace App\Dao\Models;
 
 use App\Dao\Builder\DataBuilder;
-use App\Dao\Entities\RsEntity;
+use App\Dao\Entities\InstansiEntity;
 use App\Dao\Traits\ActiveTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
@@ -14,38 +14,38 @@ use Plugins\Core;
 use Plugins\Query;
 use Touhidurabir\ModelSanitize\Sanitizable as Sanitizable;
 
-class Rs extends Model
+class Instansi extends Model
 {
-    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, RsEntity, ActiveTrait, OptionTrait;
+    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, InstansiEntity, ActiveTrait, OptionTrait;
 
-    protected $table = 'rs';
-    protected $primaryKey = 'rs_id';
+    protected $table = 'instansi';
+    protected $primaryKey = 'instansi_id';
 
     protected $fillable = [
-        'rs_id',
-        'rs_kode',
-        'rs_nama',
-        'rs_alamat',
-        'rs_deskripsi',
-        'rs_telp',
-        'rs_email',
-        'rs_kontak',
-        'rs_aktif',
+        'instansi_id',
+        'instansi_kode',
+        'instansi_nama',
+        'instansi_alamat',
+        'instansi_deskripsi',
+        'instansi_telp',
+        'instansi_email',
+        'instansi_kontak',
+        'instansi_aktif',
     ];
 
     public $sortable = [
-        'rs_kode',
-        'rs_nama',
-        'rs_telp',
-        'rs_email',
-        'rs_kontak',
+        'instansi_kode',
+        'instansi_nama',
+        'instansi_telp',
+        'instansi_email',
+        'instansi_kontak',
     ];
 
     protected $casts = [
-        'rs_aktif' => 'integer'
+        'instansi_aktif' => 'integer'
     ];
 
-    protected $filters = [
+    protected $filteinstansi = [
         'filter',
     ];
 
@@ -62,7 +62,7 @@ class Rs extends Model
             DataBuilder::build($this->field_primary())->name('ID')->show(false)->sort(),
             DataBuilder::build($this->field_code())->name('Code')->sort(),
             DataBuilder::build($this->field_name())->name('Name')->show()->sort(),
-            DataBuilder::build($this->field_person())->name('Kontak')->show()->sort(),
+            DataBuilder::build($this->field_peinstansion())->name('Kontak')->show()->sort(),
             DataBuilder::build($this->field_phone())->name('Phone')->show()->sort(),
             DataBuilder::build($this->field_email())->name('Email')->show()->sort(),
             DataBuilder::build($this->field_active())->name('Aktif')->show()->sort(),
@@ -78,8 +78,8 @@ class Rs extends Model
         parent::boot();
     }
 
-    public function has_ruangan()
+    public function has_lokasi()
     {
-        return $this->belongsToMany(Ruangan::class, 'rs_ruangan', 'rs_id', 'ruangan_id');
+        return $this->belongsToMany(Lokasi::class, 'instansi_lokasi', 'instansi_id', 'lokasi_id');
     }
 }

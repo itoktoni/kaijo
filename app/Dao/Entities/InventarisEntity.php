@@ -2,11 +2,13 @@
 
 namespace App\Dao\Entities;
 
-trait RuanganEntity
+use App\Dao\Models\ListInventaris;
+
+trait InventarisEntity
 {
     public static function field_primary()
     {
-        return 'ruangan_id';
+        return 'inventaris_id';
     }
 
     public function getFieldPrimaryAttribute()
@@ -14,9 +16,14 @@ trait RuanganEntity
         return $this->{$this->field_primary()};
     }
 
+    public static function field_link_name()
+    {
+        return 'inventaris_id_list_nama';
+    }
+
     public static function field_name()
     {
-        return 'ruangan_nama';
+        return ListInventaris::field_name();
     }
 
     public function getFieldNameAttribute()
@@ -26,7 +33,7 @@ trait RuanganEntity
 
     public static function field_code()
     {
-        return 'ruangan_kode';
+        return 'inventaris_sn';
     }
 
     public function getFieldCodeAttribute()
@@ -36,7 +43,7 @@ trait RuanganEntity
 
     public static function field_description()
     {
-        return 'ruangan_deskripsi';
+        return 'inventaris_deskripsi';
     }
 
     public function getFieldDescriptionAttribute()
@@ -46,22 +53,12 @@ trait RuanganEntity
 
     public static function field_active()
     {
-        return 'ruangan_aktif';
+        return 'inventaris_aktif';
     }
 
     public function getFieldActiveAttribute()
     {
         return $this->{self::field_active()};
-    }
-
-    public static function field_custom_id()
-    {
-        return 'ruangan_id_custom';
-    }
-
-    public function getFieldCustomIdAttribute()
-    {
-        return $this->{self::field_custom_id()};
     }
 
 }

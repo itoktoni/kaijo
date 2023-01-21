@@ -1,6 +1,8 @@
 <?php
 
 use App\Dao\Enums\MenuType;
+use App\Dao\Models\Instansi;
+use App\Dao\Models\Lokasi;
 use App\Dao\Models\Rs;
 use App\Dao\Models\Ruangan;
 use App\Http\Controllers\Auth\LoginController;
@@ -60,19 +62,20 @@ if($routes){
 }
 
 Route::get('configuration', function(Request $request){
-	$rs = Rs::getOptions();
-	$ruangan = Ruangan::getOptions();
+	$instansi = Instansi::getOptions();
+	$lokasi = Lokasi::getOptions();
 	$data = [
 		'domain' => env('APP_URL', 'https://sayur24jam.com'),
 		'version' => '1.0.0',
-		'rs' => $rs,
-		'ruangan' => $ruangan,
+		'intansi' => $instansi,
+		'lokasi' => $lokasi,
 		'book' => url('/book.pdf'),
 		'qrformat' => [
-			'RS' => 'RS001',
-			'RUANGAN' => 'UGD',
+			'INSTANSI' => 'RS001',
+			'INVENTARIS' => 'VEN001',
+			'LOKASI' => 'UGD',
 			'ID' => 'X230252',
-			'CONTOH' => 'RS001#UGD#X230252'
+			'CONTOH' => 'RS001#VEN001#UGD#X230252'
 		]
 	];
 

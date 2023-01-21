@@ -2,27 +2,26 @@
 
 namespace App\Http\Requests;
 
-use App\Dao\Models\Rs;
-use App\Dao\Models\RuanganCustom;
+use App\Dao\Models\Lokasi;
 use App\Dao\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class RuanganCustomRequest extends FormRequest
+class LokasiRequest extends FormRequest
 {
     use ValidationTrait;
 
     public function validation() : array
     {
         return [
-            'rc_nama' => 'required',
+            Lokasi::field_name() => 'required',
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            RuanganCustom::field_name() =>  Str::upper($this->{RuanganCustom::field_name()})
+            Lokasi::field_name() =>  Str::upper($this->{Lokasi::field_name()})
         ]);
     }
 

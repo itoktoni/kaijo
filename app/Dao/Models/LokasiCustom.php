@@ -3,7 +3,7 @@
 namespace App\Dao\Models;
 
 use App\Dao\Builder\DataBuilder;
-use App\Dao\Entities\RuanganCustomEntity;
+use App\Dao\Entities\LokasiCustomEntity;
 use App\Dao\Traits\ActiveTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
@@ -14,36 +14,36 @@ use Plugins\Core;
 use Plugins\Query;
 use Touhidurabir\ModelSanitize\Sanitizable as Sanitizable;
 
-class RuanganCustom extends Model
+class LokasiCustom extends Model
 {
-    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, RuanganCustomEntity, ActiveTrait, OptionTrait;
+    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, LokasiCustomEntity, ActiveTrait, OptionTrait;
 
-    protected $table = 'ruangan_custom';
-    protected $primaryKey = 'rc_id';
+    protected $table = 'lokasi_custom';
+    protected $primaryKey = 'lc_id';
 
     protected $fillable = [
-        'rc_id',
-        'rc_nama',
-        'rc_deskripsi',
+        'lc_id',
+        'lc_nama',
+        'lc_deskripsi',
     ];
 
     public $sortable = [
-        'rc_nama',
-        'rc_deskripsi',
+        'lc_nama',
+        'lc_deskripsi',
     ];
 
     protected $casts = [
-        'rc_id' => 'integer'
+        'lc_id' => 'integer'
     ];
 
-    protected $filterc = [
+    protected $filtelc = [
         'filter',
     ];
 
     public $timestamps = false;
     public $incrementing = true;
 
-    public function fieldSearching(){
+    public function fieldSealching(){
         return $this->field_name();
     }
 

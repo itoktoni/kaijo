@@ -2,11 +2,11 @@
 
 namespace App\Dao\Entities;
 
-trait RsEntity
+trait InstansiEntity
 {
     public static function field_primary()
     {
-        return 'rs_id';
+        return 'instansi_id';
     }
 
     public function getFieldPrimaryAttribute()
@@ -16,7 +16,7 @@ trait RsEntity
 
     public static function field_name()
     {
-        return 'rs_nama';
+        return 'instansi_nama';
     }
 
     public function getFieldNameAttribute()
@@ -26,7 +26,7 @@ trait RsEntity
 
     public static function field_code()
     {
-        return 'rs_kode';
+        return 'instansi_kode';
     }
 
     public function getFieldCodeAttribute()
@@ -36,7 +36,7 @@ trait RsEntity
 
     public static function field_description()
     {
-        return 'rs_deskripsi';
+        return 'instansi_deskripsi';
     }
 
     public function getFieldDescriptionAttribute()
@@ -46,7 +46,7 @@ trait RsEntity
 
     public static function field_phone()
     {
-        return 'rs_telp';
+        return 'instansi_telp';
     }
 
     public function getFieldPhoneAttribute()
@@ -56,7 +56,7 @@ trait RsEntity
 
     public static function field_email()
     {
-        return 'rs_email';
+        return 'instansi_email';
     }
 
     public function getFieldEmailAttribute()
@@ -64,19 +64,19 @@ trait RsEntity
         return $this->{self::field_email()};
     }
 
-    public static function field_person()
+    public static function field_peinstansion()
     {
-        return 'rs_kontak';
+        return 'instansi_kontak';
     }
 
-    public function getFieldPersonAttribute()
+    public function getFieldPeinstansionAttribute()
     {
-        return $this->{self::field_person()};
+        return $this->{self::field_peinstansion()};
     }
 
     public static function field_active()
     {
-        return 'rs_aktif';
+        return 'instansi_aktif';
     }
 
     public function getFieldActiveAttribute()

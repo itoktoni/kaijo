@@ -2,11 +2,11 @@
 
 namespace App\Dao\Entities;
 
-trait RuanganCustomEntity
+trait ListInventarisEntity
 {
     public static function field_primary()
     {
-        return 'rc_id';
+        return 'list_inve_kode';
     }
 
     public function getFieldPrimaryAttribute()
@@ -16,7 +16,7 @@ trait RuanganCustomEntity
 
     public static function field_name()
     {
-        return 'rc_nama';
+        return 'list_inve_nama';
     }
 
     public function getFieldNameAttribute()
@@ -24,14 +24,34 @@ trait RuanganCustomEntity
         return $this->{$this->field_name()};
     }
 
+    public static function field_code()
+    {
+        return 'list_inve_kode';
+    }
+
+    public function getFieldCodeAttribute()
+    {
+        return $this->{$this->field_code()};
+    }
+
     public static function field_description()
     {
-        return 'rc_deskripsi';
+        return 'list_inve_deskripsi';
     }
 
     public function getFieldDescriptionAttribute()
     {
         return $this->{$this->field_description()};
+    }
+
+    public static function field_active()
+    {
+        return 'list_inve_aktif';
+    }
+
+    public function getFieldActiveAttribute()
+    {
+        return $this->{self::field_active()};
     }
 
 }
