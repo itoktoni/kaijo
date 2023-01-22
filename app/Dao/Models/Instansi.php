@@ -5,8 +5,10 @@ namespace App\Dao\Models;
 use App\Dao\Builder\DataBuilder;
 use App\Dao\Entities\InstansiEntity;
 use App\Dao\Traits\ActiveTrait;
+use App\Dao\Traits\ApiTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
+use App\Http\Resources\InstansiResource;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 use Mehradsadeghi\FilterQueryString\FilterQueryString as FilterQueryString;
@@ -16,7 +18,7 @@ use Touhidurabir\ModelSanitize\Sanitizable as Sanitizable;
 
 class Instansi extends Model
 {
-    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, InstansiEntity, ActiveTrait, OptionTrait;
+    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, InstansiEntity, ActiveTrait, OptionTrait, ApiTrait;
 
     protected $table = 'instansi';
     protected $primaryKey = 'instansi_id';
@@ -45,7 +47,7 @@ class Instansi extends Model
         'instansi_aktif' => 'integer'
     ];
 
-    protected $filteinstansi = [
+    protected $filters = [
         'filter',
     ];
 
@@ -69,10 +71,15 @@ class Instansi extends Model
         ];
     }
 
+    public function apiTransform()
+    {
+        return InstansiResource::class;
+    }
+
     public static function boot()
     {
         parent::creating(function ($model) {
-            $model->{$model->field_code()} = Query::autoNumber($model->getTable(), $model->field_code(), 'RS');
+            $model->{$model->field_code()} = Query::autoNumber($model->getTable(), $model->field_code(), 'RS', 6);
         });
 
         parent::boot();

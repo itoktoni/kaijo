@@ -42,6 +42,7 @@
                                     <td class="col-md-2 text-center column-action">
                                         <x-crud :model="$table" />
                                     </td>
+                                    <td>{{ $table->field_code }}</td>
                                     <td>{{ $table->field_name }}</td>
                                     <td>{{ $table->has_custom ? $table->has_custom->field_name : '' }}</td>
                                     <td>{{ $table->field_description }}</td>

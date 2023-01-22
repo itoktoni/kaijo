@@ -14,15 +14,8 @@ class InventarisRequest extends FormRequest
     public function validation() : array
     {
         return [
-            Inventaris::field_name() => 'required',
+            Inventaris::field_id_name() => 'required',
         ];
-    }
-
-    public function prepareForValidation()
-    {
-        $this->merge([
-            Inventaris::field_name() =>  Str::upper($this->{Inventaris::field_name()})
-        ]);
     }
 
 }

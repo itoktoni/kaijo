@@ -2,8 +2,6 @@
 
 namespace App\Dao\Entities;
 
-use App\Dao\Models\ListInventaris;
-
 trait InventarisEntity
 {
     public static function field_primary()
@@ -16,14 +14,9 @@ trait InventarisEntity
         return $this->{$this->field_primary()};
     }
 
-    public static function field_link_name()
-    {
-        return 'inventaris_id_list_nama';
-    }
-
     public static function field_name()
     {
-        return ListInventaris::field_name();
+        return 'inventaris_sn';
     }
 
     public function getFieldNameAttribute()
@@ -59,6 +52,26 @@ trait InventarisEntity
     public function getFieldActiveAttribute()
     {
         return $this->{self::field_active()};
+    }
+
+    public static function field_id_location()
+    {
+        return 'inventaris_id_lokasi';
+    }
+
+    public function getFieldIdLokasiAttribute()
+    {
+        return $this->{self::field_id_location()};
+    }
+
+    public static function field_id_name()
+    {
+        return 'inventaris_id_nama';
+    }
+
+    public function getFieldIdNameAttribute()
+    {
+        return $this->{self::field_id_name()};
     }
 
 }

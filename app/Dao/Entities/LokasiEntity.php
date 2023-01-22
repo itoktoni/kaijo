@@ -2,6 +2,8 @@
 
 namespace App\Dao\Entities;
 
+use App\Dao\Models\LokasiCustom;
+
 trait LokasiEntity
 {
     public static function field_primary()
@@ -52,6 +54,11 @@ trait LokasiEntity
     public function getFieldActiveAttribute()
     {
         return $this->{self::field_active()};
+    }
+
+    public static function field_custom()
+    {
+        return LokasiCustom::field_name();
     }
 
     public static function field_custom_id()

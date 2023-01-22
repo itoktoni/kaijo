@@ -5,17 +5,21 @@ namespace App\Dao\Models;
 use App\Dao\Builder\DataBuilder;
 use App\Dao\Entities\LokasiEntity;
 use App\Dao\Traits\ActiveTrait;
+use App\Dao\Traits\ApiTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
+use App\Http\Resources\LokasiResource;
 use Illuminate\Database\Eloquent\Model;
 use Kirschbaum\PowerJoins\PowerJoins;
 use Kyslik\ColumnSortable\Sortable;
 use Mehradsadeghi\FilterQueryString\FilterQueryString as FilterQueryString;
+use PHPUnit\Framework\MockObject\Api;
+use Plugins\Query;
 use Touhidurabir\ModelSanitize\Sanitizable as Sanitizable;
 
 class Lokasi extends Model
 {
-    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, LokasiEntity, ActiveTrait, OptionTrait, PowerJoins;
+    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, LokasiEntity, ActiveTrait, OptionTrait, PowerJoins, ApiTrait;
 
     protected $table = 'lokasi';
     protected $primaryKey = 'lokasi_id';
@@ -37,7 +41,7 @@ class Lokasi extends Model
         'lokasi_id_custom' => 'integer'
     ];
 
-    protected $filtelokasi = [
+    protected $filters = [
         'filter',
     ];
 
@@ -52,6 +56,7 @@ class Lokasi extends Model
     {
         return [
             DataBuilder::build($this->field_primary())->name('ID')->show(false)->sort(),
+            DataBuilder::build($this->field_code())->name('Kode')->show()->sort(),
             DataBuilder::build($this->field_name())->name('Name')->show()->sort(),
             DataBuilder::build($this->field_custom_id())->name('ID Custom')->show(false)->sort(),
             DataBuilder::build(LokasiCustom::field_name())->name('Custom')->show()->sort(),
@@ -59,8 +64,24 @@ class Lokasi extends Model
         ];
     }
 
+    public function apiTransform()
+    {
+        return LokasiResource::class;
+    }
+
     public function has_custom()
     {
         return $this->hasOne(LokasiCustom::class, LokasiCustom::field_primary(), self::field_custom_id());
+    }
+
+    public static function boot()
+    {
+        parent::creating(function ($model) {
+            $code = request()->get($model->field_code());
+            $model->{$model->field_code()} = !empty($code) ? $code : Query::autoNumber($model->getTable(), $model->field_code(), 'L', 5);
+            $model->{$model->field_active()} = 1;
+        });
+
+        parent::boot();
     }
 }

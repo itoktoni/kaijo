@@ -4,6 +4,7 @@ namespace App\Dao\Repositories;
 
 use App\Dao\Interfaces\CrudInterface;
 use App\Dao\Models\Lokasi;
+use Plugins\Notes;
 
 class LokasiRepository extends MasterRepository implements CrudInterface
 {
@@ -26,7 +27,12 @@ class LokasiRepository extends MasterRepository implements CrudInterface
                 if($paging = request()->get('paginate')){
                     return $query->paginate($paging);
                 }
-                return $query->get();
+
+                if(method_exists($this->model, 'getApiCollection')){
+                    return $this->model->getApiCollection($query->get());
+                }
+
+                return Notes::data($query->get());
             }
 
         $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate(env('PAGINATION_NUMBER')) : $query->paginate(env('PAGINATION_NUMBER'));

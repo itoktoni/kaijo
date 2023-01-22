@@ -36,14 +36,14 @@ class LokasiCustom extends Model
         'lc_id' => 'integer'
     ];
 
-    protected $filtelc = [
+    protected $filters = [
         'filter',
     ];
 
     public $timestamps = false;
     public $incrementing = true;
 
-    public function fieldSealching(){
+    public function fieldSearching(){
         return $this->field_name();
     }
 

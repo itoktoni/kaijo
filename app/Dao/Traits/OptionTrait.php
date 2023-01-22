@@ -53,7 +53,6 @@ trait OptionTrait
 
             $query = $query
             ->select(self::$option_model->fieldSearching(), self::$option_model->getKeyName());
-
             if(method_exists(self::$option_model, 'field_active')){
                 $query = self::$option_model->where(self::$option_model->field_active(), BooleanType::Yes);
             }

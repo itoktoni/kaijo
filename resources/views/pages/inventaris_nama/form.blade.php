@@ -5,8 +5,8 @@
 
             @bind($model)
 
-            <x-form-input col="6" name="list_inve_nama" />
-            <x-form-textarea col="6" name="list_inve_deskripsi" />
+            <x-form-input col="6" name="in_nama" />
+            <x-form-textarea col="6" name="in_deskripsi" />
 
             @endbind
 

@@ -26,6 +26,11 @@ class MasterRepository implements CrudInterface
                 if($paging = request()->get('paginate')){
                     return Notes::data($query->paginate($paging));
                 }
+
+                if(method_exists($this->model, 'getApiResource')){
+                    return $this->model->getApiCollection($query->get());
+                }
+
                 return Notes::data($query->get());
             }
 

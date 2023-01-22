@@ -3,13 +3,14 @@
 namespace App\Dao\Repositories;
 
 use App\Dao\Interfaces\CrudInterface;
-use App\Dao\Models\ListInventaris;
+use App\Dao\Models\InventarisNama;
+use Plugins\Notes;
 
-class ListInventarisRepository extends MasterRepository implements CrudInterface
+class InventarisNamaRepository extends MasterRepository implements CrudInterface
 {
     public function __construct()
     {
-        $this->model = empty($this->model) ? new ListInventaris() : $this->model;
+        $this->model = empty($this->model) ? new InventarisNama() : $this->model;
     }
 
     public function dataRepository()
@@ -22,7 +23,12 @@ class ListInventarisRepository extends MasterRepository implements CrudInterface
                 if($paging = request()->get('paginate')){
                     return $query->paginate($paging);
                 }
-                return $query->get();
+
+                if(method_exists($this->model, 'getApiCollection')){
+                    return $this->model->getApiCollection($query->get());
+                }
+
+                return Notes::data($query->get());
             }
 
         $query = env('PAGINATION_SIMPLE') ? $query->simplePaginate(env('PAGINATION_NUMBER')) : $query->paginate(env('PAGINATION_NUMBER'));

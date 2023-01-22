@@ -2,11 +2,17 @@
 
 use App\Dao\Enums\MenuType;
 use App\Dao\Models\Instansi;
+use App\Dao\Models\InventarisNama;
 use App\Dao\Models\Lokasi;
 use App\Dao\Models\Rs;
 use App\Dao\Models\Ruangan;
+use App\Dao\Repositories\InventarisRepository;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\InstansiResource;
+use App\Http\Resources\InventarisNamaResource;
+use App\Http\Resources\InventarisResource;
+use App\Http\Resources\LokasiResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -62,20 +68,27 @@ if($routes){
 }
 
 Route::get('configuration', function(Request $request){
-	$instansi = Instansi::getOptions();
-	$lokasi = Lokasi::getOptions();
+	$instansi = InstansiResource::collection(Instansi::with(['has_lokasi'])->get());
+	$location = LokasiResource::collection(Lokasi::get());
+	$name = InventarisNamaResource::collection(InventarisNama::get());
+
+	$nameRepo = new InventarisRepository();
+	$inventaris = InventarisResource::collection($nameRepo->dataRepository());
+
 	$data = [
 		'domain' => env('APP_URL', 'https://sayur24jam.com'),
 		'version' => '1.0.0',
-		'intansi' => $instansi,
-		'lokasi' => $lokasi,
+		'instansi' => $instansi,
+		'location' => $location,
+		'name' => $name,
+		'inventaris' => $inventaris,
 		'book' => url('/book.pdf'),
 		'qrformat' => [
 			'INSTANSI' => 'RS001',
-			'INVENTARIS' => 'VEN001',
 			'LOKASI' => 'UGD',
-			'ID' => 'X230252',
-			'CONTOH' => 'RS001#VEN001#UGD#X230252'
+			'NAMA' => 'X230252',
+			'INVENTARIS' => 'VEN001',
+			'CONTOH' => 'RS001#UGD#X230252#VEN001'
 		]
 	];
 

@@ -2,11 +2,11 @@
 
 namespace App\Dao\Entities;
 
-trait ListInventarisEntity
+trait InventarisNamaEntity
 {
     public static function field_primary()
     {
-        return 'list_inve_kode';
+        return 'in_id';
     }
 
     public function getFieldPrimaryAttribute()
@@ -16,7 +16,7 @@ trait ListInventarisEntity
 
     public static function field_name()
     {
-        return 'list_inve_nama';
+        return 'in_nama';
     }
 
     public function getFieldNameAttribute()
@@ -26,32 +26,22 @@ trait ListInventarisEntity
 
     public static function field_code()
     {
-        return 'list_inve_kode';
+        return 'in_kode';
     }
 
-    public function getFieldCodeAttribute()
+    public function getFieldKodeAttribute()
     {
         return $this->{$this->field_code()};
     }
 
     public static function field_description()
     {
-        return 'list_inve_deskripsi';
+        return 'in_deskripsi';
     }
 
     public function getFieldDescriptionAttribute()
     {
         return $this->{$this->field_description()};
-    }
-
-    public static function field_active()
-    {
-        return 'list_inve_aktif';
-    }
-
-    public function getFieldActiveAttribute()
-    {
-        return $this->{self::field_active()};
     }
 
 }

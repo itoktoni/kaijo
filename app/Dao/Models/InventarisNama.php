@@ -4,10 +4,13 @@ namespace App\Dao\Models;
 
 use App\Dao\Builder\DataBuilder;
 use App\Dao\Entities\InventarisEntity;
-use App\Dao\Entities\ListInventarisEntity;
+use App\Dao\Entities\InventarisNamaEntity;
+use App\Dao\Entities\NamaInventarisEntity;
 use App\Dao\Traits\ActiveTrait;
+use App\Dao\Traits\ApiTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
+use App\Http\Resources\InventarisNamaResource;
 use Illuminate\Database\Eloquent\Model;
 use Kirschbaum\PowerJoins\PowerJoins;
 use Kyslik\ColumnSortable\Sortable;
@@ -15,32 +18,30 @@ use Mehradsadeghi\FilterQueryString\FilterQueryString as FilterQueryString;
 use Plugins\Query;
 use Touhidurabir\ModelSanitize\Sanitizable as Sanitizable;
 
-class ListInventaris extends Model
+class InventarisNama extends Model
 {
-    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, ListInventarisEntity, ActiveTrait, OptionTrait, PowerJoins;
+    use Sortable, FilterQueryString, Sanitizable, DataTableTrait, InventarisNamaEntity, ActiveTrait, OptionTrait, PowerJoins, ApiTrait;
 
-    protected $table = 'list_inventaris';
-    protected $primaryKey = 'list_inve_kode';
-    protected $keyType = 'string';
+    protected $table = 'inventaris_nama';
+    protected $primaryKey = 'in_id';
 
     protected $fillable = [
-        'list_inve_kode',
-        'list_inve_nama',
-        'list_inve_aktif',
-        'list_inve_deskripsi',
+        'in_id',
+        'in_kode',
+        'in_nama',
+        'in_deskripsi',
     ];
 
     public $sortable = [
-        'list_inve_nama',
-        'list_inve_deskripsi',
+        'in_nama',
+        'in_deskripsi',
     ];
 
     protected $casts = [
-        'list_inve_kode' => 'string',
-        'list_inve_aktif' => 'integer'
+        'in_kode' => 'string',
     ];
 
-    protected $filtelist_inve = [
+    protected $filters = [
         'filter',
     ];
 
@@ -61,11 +62,15 @@ class ListInventaris extends Model
         ];
     }
 
+    public function apiTransform()
+    {
+        return InventarisNamaResource::class;
+    }
+
     public static function boot()
     {
         parent::creating(function ($model) {
-            $model->{$model->field_code()} = Query::autoNumber($model->getTable(), $model->field_code(), 'LI');
-            $model->{$model->field_active()} = 1;
+            $model->{$model->field_code()} = Query::autoNumber($model->getTable(), $model->field_code(), 'IN', 6);
         });
 
         parent::boot();

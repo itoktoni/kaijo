@@ -43,7 +43,7 @@
                                         <x-crud :model="$table" />
                                     </td>
                                     <td>{{ $table->field_code }}</td>
-                                    <td>{{ $table->field_name }}</td>
+                                    {{-- <td>{{ $table->field_name }}</td> --}}
                                     <td>{{ $table->field_description }}</td>
                                 </tr>
                             @empty
