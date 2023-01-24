@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Dao\Enums\BooleanType;
 use App\Dao\Enums\UserType;
+use App\Dao\Models\Brand;
 use App\Dao\Models\Inventaris;
 use App\Dao\Models\InventarisCustom;
+use App\Dao\Models\InventarisNama;
+use App\Dao\Models\InventarisTipe;
 use App\Dao\Models\ListInventaris;
 use App\Dao\Models\Lokasi;
 use App\Dao\Repositories\InventarisRepository;
@@ -26,11 +30,18 @@ class InventarisController extends MasterController
 
     protected function beforeForm()
     {
-        $name = ListInventaris::getOptions();
-        $location = Lokasi::getOptions();
+        $boolean = BooleanType::getOptions();
+        $type = InventarisTipe::getOptions();
+        $brand = Brand::getOptions();
+        $name = InventarisNama::getOptions([InventarisNama::field_code() => InventarisNama::field_name()]);
+        $location = Lokasi::getOptions([Lokasi::field_code() => Lokasi::field_name()]);
+
         self::$share = [
             'location' => $location,
             'name' => $name,
+            'brand' => $brand,
+            'type' => $type,
+            'boolean' => $boolean,
         ];
     }
 

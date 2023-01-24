@@ -19,8 +19,8 @@ class LokasiResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->{$this->field_code()},
-            'name' => $this->{$this->field_name()},
+            'id' => $this->field_code,
+            'name' => $this->field_name,
             'custom' => $this->{$this->field_custom()},
         ];
         // return parent::toArray($request);

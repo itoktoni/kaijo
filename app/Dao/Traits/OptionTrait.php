@@ -46,8 +46,22 @@ trait OptionTrait
         self::$option_model = self::getModel();
         $query = self::$option_model->query();
 
-        if ($raw) {
+        if (is_bool($raw) && $raw) {
             return $query->get();
+        }
+        else if(is_array($raw)){
+
+            $field_id = array_keys($raw)[0];
+            $field_name = array_values($raw)[0];
+
+            $query = $query
+            ->select($field_id, $field_name);
+            if(method_exists(self::$option_model, 'field_active')){
+                $query = self::$option_model->where(self::$option_model->field_active(), BooleanType::Yes);
+            }
+
+            self::$option_model = $query->get()->pluck($field_name,  $field_id)
+            ?? [];
         }
         else{
 

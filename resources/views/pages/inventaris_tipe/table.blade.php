@@ -42,14 +42,7 @@
                                     <td class="col-md-2 text-center column-action">
                                         <x-crud :model="$table" />
                                     </td>
-                                    <td>{{ $table->field_code }}</td>
-                                    <td>{{ $table->field_is_kalibrator }}</td>
-                                    <td>{{ $table->field_is_asset }}</td>
-                                    <td>{{ $table->has_type->field_name ?? '' }}</td>
-                                    <td>{{ $table->has_brand->field_name ?? '' }}</td>
-                                    <td>{{ $table->has_location->field_name ?? '' }}</td>
-                                    <td>{{ $table->has_name->field_name ?? '' }}</td>
-                                    <td>{{ $table->field_description }}</td>
+                                    <td>{{ $table->field_name }}</td>
                                 </tr>
                             @empty
                             @endforelse

@@ -9,7 +9,6 @@ use App\Dao\Traits\ApiTrait;
 use App\Dao\Traits\DataTableTrait;
 use App\Dao\Traits\OptionTrait;
 use App\Http\Resources\InventarisResource;
-use App\Http\Resources\LokasiResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kirschbaum\PowerJoins\PowerJoins;
@@ -32,7 +31,11 @@ class Inventaris extends Model
         'inventaris_nama',
         'inventaris_id_nama',
         'inventaris_id_lokasi',
+        'inventaris_id_tipe',
+        'inventaris_id_brand',
         'inventaris_deskripsi',
+        'inventaris_is_kalibrator',
+        'inventaris_is_asset',
     ];
 
     public $sortable = [
@@ -41,12 +44,14 @@ class Inventaris extends Model
     ];
 
     protected $casts = [
+        'inventaris_id' => 'integer',
         'inventaris_id_nama' => 'string',
         'inventaris_id_lokasi' => 'string'
     ];
 
     protected $filters = [
         'filter',
+        'is_kalibrator'
     ];
 
     protected $with = ['has_name'];
@@ -72,12 +77,22 @@ class Inventaris extends Model
         return [
             DataBuilder::build($this->field_primary())->name('ID')->show(false)->sort(),
             DataBuilder::build($this->field_code())->name('Kode')->show()->sort(),
+            DataBuilder::build($this->field_is_kalibrator())->name('Kalibrator')->show()->width('110px')->sort(),
+            DataBuilder::build($this->field_is_asset())->name('Asset')->show()->sort()->width('90px'),
+            DataBuilder::build($this->field_id_type())->name('Name')->show(false)->sort(),
+            DataBuilder::build(InventarisTipe::field_name())->name('Tipe')->show()->sort()->width('80px'),
+            DataBuilder::build($this->field_id_brand())->name('Name')->show(false)->sort(),
+            DataBuilder::build(Brand::field_name())->name('Brand')->show()->sort()->width('120px'),
             DataBuilder::build($this->field_id_location())->name('Name')->show(false)->sort(),
-            DataBuilder::build(Lokasi::field_name())->name('Lokasi')->show()->sort(),
+            DataBuilder::build(Lokasi::field_name())->name('Lokasi')->show()->sort()->width('100px'),
             DataBuilder::build($this->field_id_name())->name('Name')->show(false)->sort(),
-            DataBuilder::build(InventarisNama::field_name())->name('Name')->show()->sort(),
-            DataBuilder::build($this->field_description())->name('Deskripsi')->show()->sort(),
+            DataBuilder::build(InventarisNama::field_name())->name('Name')->show()->sort()->width('200px'),
+            DataBuilder::build($this->field_description())->name('Deskripsi')->show()->sort()->width('120px'),
         ];
+    }
+
+    public function is_kalibrator($query, $value){
+        return $query->where($this->field_is_kalibrator(), $value);
     }
 
     public function apiTransform()
@@ -93,6 +108,16 @@ class Inventaris extends Model
     public function has_location()
     {
         return $this->hasOne(Lokasi::class, Lokasi::field_code(), self::field_id_location());
+    }
+
+    public function has_type()
+    {
+        return $this->hasOne(InventarisTipe::class, InventarisTipe::field_primary(), self::field_id_type());
+    }
+
+    public function has_brand()
+    {
+        return $this->hasOne(Brand::class, Brand::field_primary(), self::field_id_brand());
     }
 
     public static function boot()

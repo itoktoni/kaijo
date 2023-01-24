@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InventarisNamaResource extends JsonResource
+class GeneralResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,7 @@ class InventarisNamaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->field_code,
+            'id' => $this->field_id,
             'name' => $this->field_name,
         ];
         // return parent::toArray($request);

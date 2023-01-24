@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Dao\Models\Brand;
 use App\Dao\Models\InventarisNama;
+use App\Dao\Models\InventarisTipe;
 use App\Dao\Models\Lokasi;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,9 +19,16 @@ class InventarisResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->{$this->field_code()},
+            'id' => $this->field_code,
             'name' => $this->{InventarisNama::field_name()},
-            'location' => $this->{Lokasi::field_name()},
+            'location_id' => $this->{$this->field_id_location()},
+            'location_name' => $this->{Lokasi::field_name()},
+            'type_id' => $this->{$this->field_id_type()},
+            'type_name' => $this->{InventarisTipe::field_name()},
+            'brand_id' => $this->{$this->field_id_brand()},
+            'brand_name' => $this->{Brand::field_name()},
+            'is_kalibrator' => $this->field_is_kalibrator,
+            'is_asset' => $this->field_is_asset,
         ];
         // return parent::toArray($request);
     }

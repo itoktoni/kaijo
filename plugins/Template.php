@@ -128,7 +128,7 @@ class Template
             $string = " class=" . $value->class;
         }
         if ($value->width) {
-            $string = $string . 'style="width:' . $value->width.'"';
+            $string = $string . 'style=width:' . $value->width;
         }
         return $string;
     }

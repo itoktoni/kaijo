@@ -3,25 +3,20 @@
 namespace App\Dao\Repositories;
 
 use App\Dao\Interfaces\CrudInterface;
-use App\Dao\Models\Inventaris;
+use App\Dao\Models\Satuan;
 use Plugins\Notes;
 
-class InventarisRepository extends MasterRepository implements CrudInterface
+class SatuanRepository extends MasterRepository implements CrudInterface
 {
     public function __construct()
     {
-        $this->model = empty($this->model) ? new Inventaris() : $this->model;
+        $this->model = empty($this->model) ? new Satuan() : $this->model;
     }
 
     public function dataRepository()
     {
         $query = $this->model
             ->select($this->model->getSelectedField())
-            ->with(['has_name', 'has_location', 'has_type', 'has_brand'])
-            ->leftJoinRelationship('has_name')
-            ->leftJoinRelationship('has_location')
-            ->leftJoinRelationship('has_type')
-            ->leftJoinRelationship('has_brand')
             ->sortable()->filter();
 
             if(request()->hasHeader('authorization')){
