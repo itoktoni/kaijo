@@ -68,27 +68,21 @@ if($routes){
 }
 
 Route::get('configuration', function(Request $request){
-	$instansi = InstansiResource::collection(Instansi::with(['has_lokasi'])->get());
-	$location = LokasiResource::collection(Lokasi::get());
-	$name = InventarisNamaResource::collection(InventarisNama::get());
-
-	$nameRepo = new InventarisRepository();
-	$inventaris = InventarisResource::collection($nameRepo->dataRepository());
 
 	$data = [
 		'domain' => env('APP_URL', 'https://sayur24jam.com'),
 		'version' => '1.0.0',
-		'instansi' => $instansi,
-		'location' => $location,
-		'name' => $name,
-		'inventaris' => $inventaris,
 		'book' => url('/book.pdf'),
-		'qrformat' => [
-			'INSTANSI' => 'RS001',
-			'LOKASI' => 'UGD',
-			'NAMA' => 'X230252',
-			'INVENTARIS' => 'VEN001',
-			'CONTOH' => 'RS001#UGD#X230252#VEN001'
+		'qr_format' => [
+			'instansi' => 'RS001',
+			'lokasi' => 'UGD',
+			'nama' => 'LAPTOP LENOVO',
+			'inventaris' => 'VEN001',
+		],
+		'manual_format' => [
+			'instansi' => 'RS001',
+			'lokasi' => 'UGD',
+			'inventaris' => 'VEN001',
 		]
 	];
 

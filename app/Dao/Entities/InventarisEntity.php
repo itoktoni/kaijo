@@ -86,6 +86,16 @@ trait InventarisEntity
         return $this->{self::field_id_brand()};
     }
 
+    public static function field_id_instansi()
+    {
+        return 'inventaris_id_instansi';
+    }
+
+    public function getFieldIdInstansiAttribute()
+    {
+        return $this->{self::field_id_instansi()};
+    }
+
     public static function field_id_name()
     {
         return 'inventaris_id_nama';

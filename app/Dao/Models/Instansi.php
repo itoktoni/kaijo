@@ -89,4 +89,9 @@ class Instansi extends Model
     {
         return $this->belongsToMany(Lokasi::class, 'instansi_lokasi', 'instansi_id', 'lokasi_id');
     }
+
+    public function has_inventaris()
+    {
+        return $this->hasMany(Inventaris::class, Inventaris::field_id_instansi(), self::field_code());
+    }
 }

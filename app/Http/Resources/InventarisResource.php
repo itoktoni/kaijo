@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Dao\Models\Brand;
+use App\Dao\Models\Instansi;
 use App\Dao\Models\InventarisNama;
 use App\Dao\Models\InventarisTipe;
 use App\Dao\Models\Lokasi;
@@ -20,11 +21,13 @@ class InventarisResource extends JsonResource
     {
         return [
             'id' => $this->field_code,
-            'name' => $this->{InventarisNama::field_name()},
-            'location_id' => $this->{$this->field_id_location()},
-            'location_name' => $this->{Lokasi::field_name()},
-            'type_id' => $this->{$this->field_id_type()},
-            'type_name' => $this->{InventarisTipe::field_name()},
+            'nama' => $this->{InventarisNama::field_name()},
+            'tipe_id' => $this->{$this->field_id_type()},
+            'tipe_name' => $this->{InventarisTipe::field_name()},
+            'instansi_id' => $this->{$this->field_id_instansi()},
+            'instansi_name' => $this->{Instansi::field_name()},
+            'lokasi_id' => $this->{$this->field_id_location()},
+            'lokasi_name' => $this->{Lokasi::field_name()},
             'brand_id' => $this->{$this->field_id_brand()},
             'brand_name' => $this->{Brand::field_name()},
             'is_kalibrator' => $this->field_is_kalibrator,

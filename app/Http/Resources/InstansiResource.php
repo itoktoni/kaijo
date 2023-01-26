@@ -16,8 +16,9 @@ class InstansiResource extends JsonResource
     {
         return [
             'id' => $this->field_code,
-            'name' => $this->field_name,
-            'lokasi' => LokasiResource::collection($this->has_lokasi)
+            'nama' => $this->field_name,
+            'lokasi' => LokasiResource::collection($this->has_lokasi),
+            'inventaris' => InventarisResource::collection($this->has_inventaris)
         ];
         // return parent::toArray($request);
     }

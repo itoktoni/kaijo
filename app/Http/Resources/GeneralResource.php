@@ -16,7 +16,7 @@ class GeneralResource extends JsonResource
     {
         return [
             'id' => $this->field_id,
-            'name' => $this->field_name,
+            'nama' => $this->field_name,
         ];
         // return parent::toArray($request);
     }

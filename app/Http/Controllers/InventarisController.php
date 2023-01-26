@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dao\Enums\BooleanType;
 use App\Dao\Enums\UserType;
 use App\Dao\Models\Brand;
+use App\Dao\Models\Instansi;
 use App\Dao\Models\Inventaris;
 use App\Dao\Models\InventarisCustom;
 use App\Dao\Models\InventarisNama;
@@ -33,6 +34,7 @@ class InventarisController extends MasterController
         $boolean = BooleanType::getOptions();
         $type = InventarisTipe::getOptions();
         $brand = Brand::getOptions();
+        $instansi = Instansi::getOptions([Instansi::field_code() => Instansi::field_name()]);
         $name = InventarisNama::getOptions([InventarisNama::field_code() => InventarisNama::field_name()]);
         $location = Lokasi::getOptions([Lokasi::field_code() => Lokasi::field_name()]);
 
@@ -40,6 +42,7 @@ class InventarisController extends MasterController
             'location' => $location,
             'name' => $name,
             'brand' => $brand,
+            'instansi' => $instansi,
             'type' => $type,
             'boolean' => $boolean,
         ];

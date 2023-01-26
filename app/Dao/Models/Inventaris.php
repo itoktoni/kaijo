@@ -36,6 +36,7 @@ class Inventaris extends Model
         'inventaris_deskripsi',
         'inventaris_is_kalibrator',
         'inventaris_is_asset',
+        'inventaris_id_instansi',
     ];
 
     public $sortable = [
@@ -46,7 +47,8 @@ class Inventaris extends Model
     protected $casts = [
         'inventaris_id' => 'integer',
         'inventaris_id_nama' => 'string',
-        'inventaris_id_lokasi' => 'string'
+        'inventaris_id_lokasi' => 'string',
+        'inventaris_id_instansi' => 'string',
     ];
 
     protected $filters = [
@@ -83,6 +85,10 @@ class Inventaris extends Model
             DataBuilder::build(InventarisTipe::field_name())->name('Tipe')->show()->sort()->width('80px'),
             DataBuilder::build($this->field_id_brand())->name('Name')->show(false)->sort(),
             DataBuilder::build(Brand::field_name())->name('Brand')->show()->sort()->width('120px'),
+
+            DataBuilder::build($this->field_id_instansi())->name('Name')->show(false)->sort(),
+            DataBuilder::build(Instansi::field_name())->name('Instansi')->show()->sort()->width('120px'),
+
             DataBuilder::build($this->field_id_location())->name('Name')->show(false)->sort(),
             DataBuilder::build(Lokasi::field_name())->name('Lokasi')->show()->sort()->width('100px'),
             DataBuilder::build($this->field_id_name())->name('Name')->show(false)->sort(),
@@ -118,6 +124,11 @@ class Inventaris extends Model
     public function has_brand()
     {
         return $this->hasOne(Brand::class, Brand::field_primary(), self::field_id_brand());
+    }
+
+    public function has_instansi()
+    {
+        return $this->hasOne(Instansi::class, Instansi::field_code(), self::field_id_instansi());
     }
 
     public static function boot()

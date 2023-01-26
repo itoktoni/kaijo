@@ -16,7 +16,7 @@ class InventarisNamaResource extends JsonResource
     {
         return [
             'id' => $this->field_code,
-            'name' => $this->field_name,
+            'nama' => $this->field_name,
         ];
         // return parent::toArray($request);
     }

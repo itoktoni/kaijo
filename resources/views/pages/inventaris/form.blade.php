@@ -7,6 +7,7 @@
 
             <x-form-select col="6" class="search" name="inventaris_id_nama" :options="$name" />
             <x-form-input col="6" label="Serial Number" name="inventaris_sn" />
+            <x-form-select col="6" class="search" label="Rumah sakit" name="inventaris_id_instansi" :options="$instansi" />
             <x-form-select col="6" class="search" name="inventaris_id_lokasi" :options="$location" />
             <x-form-select col="3" class="search" name="inventaris_id_tipe" :options="$type" />
             <x-form-select col="3" class="search" name="inventaris_id_brand" :options="$brand" />
